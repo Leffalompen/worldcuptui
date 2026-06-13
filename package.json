@@ -1,0 +1,16 @@
+{
+  "name": "fifawc-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "k9s-style web TUI for exploring openfootball World Cup data",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}

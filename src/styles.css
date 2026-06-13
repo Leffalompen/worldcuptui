@@ -1,0 +1,223 @@
+/* Terminal-styled UI mimicking the Textual dark theme. */
+
+:root {
+  --bg: #0a0e14;
+  --bg-panel: #11161f;
+  --bg-boost: #1b2230;
+  --fg: #d7dce2;
+  --fg-muted: #7d8590;
+  --accent: #2bd9d9; /* cyan cursor accent */
+  --accent-blue: #1f6feb;
+  --header-bg: #0d4f9e;
+  --header-fg: #eaf2ff;
+  --footer-bg: #11161f;
+  --row-even: #0e131c;
+  --cursor-bg: #15485f;
+  --cursor-fg: #eafcff;
+  --red: #ff6b6b;
+  --border: #2a3340;
+  --font: "Cascadia Code", "JetBrains Mono", "Consolas", "DejaVu Sans Mono",
+    "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+#app {
+  height: 100vh;
+}
+
+.tui {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header */
+.tui-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--header-bg);
+  color: var(--header-fg);
+  padding: 2px 10px;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+.tui-clock {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.9;
+}
+
+/* Breadcrumb */
+.tui-breadcrumb {
+  background: var(--bg-boost);
+  padding: 2px 10px;
+  white-space: nowrap;
+  overflow-x: auto;
+  flex: 0 0 auto;
+}
+.tui-crumb {
+  cursor: pointer;
+  color: var(--fg);
+}
+.tui-crumb:not(.current):hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.tui-crumb.current {
+  cursor: default;
+  color: var(--accent);
+  font-weight: 600;
+}
+.tui-crumb-sep {
+  color: var(--fg-muted);
+}
+
+/* Note line */
+.tui-note {
+  color: var(--fg-muted);
+  padding: 1px 10px;
+  min-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 0 0 auto;
+}
+
+/* Detail panes */
+.tui-detail,
+.tui-detail-below {
+  padding: 2px 10px;
+  white-space: pre;
+  overflow-x: auto;
+  flex: 0 0 auto;
+}
+.tui-detail-below {
+  border-top: 1px solid var(--border);
+}
+.m-dim {
+  color: var(--fg-muted);
+}
+.m-red {
+  color: var(--red);
+}
+
+/* Table */
+.tui-table-wrap {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 0 6px;
+}
+.tui-table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
+.tui-table th {
+  text-align: left;
+  position: sticky;
+  top: 0;
+  background: var(--bg-boost);
+  color: var(--fg);
+  padding: 2px 10px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.tui-table td {
+  padding: 1px 10px;
+}
+.tui-table tbody tr:nth-child(even) {
+  background: var(--row-even);
+}
+.tui-table tbody tr:hover {
+  background: var(--bg-boost);
+  cursor: pointer;
+}
+.tui-table tbody tr.cursor,
+.tui-table tbody tr.cursor:hover {
+  background: var(--cursor-bg);
+  color: var(--cursor-fg);
+}
+
+/* Loading */
+.tui-loading {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* Footer */
+.tui-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border);
+  padding: 2px 8px;
+  flex: 0 0 auto;
+  gap: 10px;
+}
+.tui-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tui-chip {
+  padding: 1px 8px;
+  border-radius: 3px;
+  background: var(--bg-boost);
+  color: var(--fg);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.tui-chip:hover {
+  background: var(--accent-blue);
+  color: var(--header-fg);
+}
+.tui-chip.disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+.tui-status {
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Toast */
+.tui-toast {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--accent-blue);
+  color: var(--header-fg);
+  padding: 6px 14px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.tui-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
