@@ -10,7 +10,7 @@ const DEFAULT_YEAR = "2026";
 export const CACHE_TTL_MS = 3600_000; // 60 minutes — cache kept this long unless the user forces a refresh (r)
 
 const CACHE_PREFIX = "fifawc:cache:";
-const FAVOURITE_KEY = "fifawc:favourite";
+const FAVOURITE_PREFIX = "fifawc:favourite:";
 
 export interface Source {
   /** URL fetched for this source. */
@@ -118,18 +118,25 @@ export async function loadData(
 }
 
 // -- favourite persistence -------------------------------------------------- //
-export function loadFavourite(): string | null {
+// Favourites are scoped per tournament source: a favourite picked while viewing
+// the 2026 data does not apply to 2018, 2022, etc. (the team may not even play
+// in another edition). Keyed by the same stable `cacheKey` used for caching.
+function favouriteStorageKey(source: Source): string {
+  return FAVOURITE_PREFIX + source.cacheKey;
+}
+
+export function loadFavourite(source: Source): string | null {
   try {
-    return localStorage.getItem(FAVOURITE_KEY) || null;
+    return localStorage.getItem(favouriteStorageKey(source)) || null;
   } catch {
     return null;
   }
 }
 
-export function saveFavourite(team: string | null): void {
+export function saveFavourite(source: Source, team: string | null): void {
   try {
-    if (team) localStorage.setItem(FAVOURITE_KEY, team);
-    else localStorage.removeItem(FAVOURITE_KEY);
+    if (team) localStorage.setItem(favouriteStorageKey(source), team);
+    else localStorage.removeItem(favouriteStorageKey(source));
   } catch {
     // best-effort
   }

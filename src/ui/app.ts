@@ -29,7 +29,7 @@ export class App {
   private wc: WorldCup | null = null;
   private pages: Pages | null = null;
   private stack: Frame[] = [];
-  private favourite: string | null = loadFavourite();
+  private favourite: string | null = null;
 
   private fetchedAt: Date | null = null;
   private fromCache = false;
@@ -38,6 +38,7 @@ export class App {
 
   constructor(root: HTMLElement) {
     this.source = resolveSource();
+    this.favourite = loadFavourite(this.source);
     this.view = new View(root, {
       onRowClick: (i) => this.setCursor(i),
       onRowActivate: (i) => this.activate(i),
@@ -188,12 +189,12 @@ export class App {
     if (this.favourite === team) {
       this.favourite = null;
       this.pages.favourite = null;
-      saveFavourite(null);
+      saveFavourite(this.source, null);
       this.view.toast("Cleared favourite");
     } else {
       this.favourite = team;
       this.pages.favourite = team;
-      saveFavourite(team);
+      saveFavourite(this.source, team);
       this.view.toast(`⭐ ${team} set as favourite`);
     }
 
