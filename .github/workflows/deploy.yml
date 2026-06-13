@@ -10,6 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# The Pages actions (e.g. actions/deploy-pages@v4) still ship a Node 20 runtime.
+# Opt them into Node 24 ahead of the June 2026 default switch to silence the
+# deprecation warning and stay forward-compatible.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 concurrency:
   group: pages
   cancel-in-progress: true
