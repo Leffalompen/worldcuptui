@@ -1,6 +1,6 @@
 # World Cup TUI (web)
 
-A k9s‑style, keyboard‑driven web app for exploring FIFA World Cup data — groups,
+A TUI (terminal‑style), keyboard‑driven web app for exploring FIFA World Cup data — groups,
 standings, fixtures, results, countries, stadiums, rounds, top scorers and
 per‑match detail — rendered as a fast terminal‑style table UI in the browser.
 
