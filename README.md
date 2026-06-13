@@ -48,19 +48,23 @@ All credit for the underlying match data goes to the
 ## Refresh & caching
 
 To stay fast and avoid hammering GitHub, fetched data is cached in the browser's
-`localStorage` with a **1‑hour TTL** (time‑to‑live). The status line shows
-whether the current view came from `cache` or `live`, along with the timestamp.
+`localStorage` and **kept for 60 minutes** (the TTL, time‑to‑live). Within that
+window the data is served straight from cache and **never re‑fetched** — the only
+way to get fresh data sooner is to **press `r`** to force a refresh. The status
+line shows whether the current view came from `cache` or `live`, along with the
+timestamp.
 
 How it behaves:
 
 - **First load / new source** — fetched live, then cached under a key derived
   from the chosen `year`/`url`.
-- **Within the TTL (1 hour)** — served instantly from cache, no network request.
-- **Stale cache (older than 1 hour)** — the app automatically re‑fetches in the
-  background when the tab becomes visible, regains focus, is restored from the
-  page cache, or on a periodic 5‑minute check while visible.
-- **Manual refresh** — press **`r`** (or the refresh action) to force a live
-  re‑fetch immediately, bypassing the cache regardless of age.
+- **Within 60 minutes** — served instantly from cache, no network request,
+  regardless of how many times you navigate or reopen the page.
+- **After 60 minutes (stale)** — the cache is considered expired and the app
+  re‑fetches in the background when the tab becomes visible, regains focus, is
+  restored from the page cache, or on a periodic 5‑minute check while visible.
+- **Manual refresh** — press **`r`** (or the refresh action) at any time to force
+  a live re‑fetch immediately, bypassing the 60‑minute cache regardless of age.
 
 Your **favourite country** (press **`f`**) is also persisted in `localStorage`,
 independent of the data cache.

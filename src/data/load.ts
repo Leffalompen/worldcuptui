@@ -7,7 +7,7 @@ const URL_TEMPLATE = (year: string) =>
   `https://raw.githubusercontent.com/openfootball/worldcup.json/master/${year}/worldcup.json`;
 
 const DEFAULT_YEAR = "2026";
-export const CACHE_TTL_MS = 3600_000; // 1 hour
+export const CACHE_TTL_MS = 3600_000; // 60 minutes — cache kept this long unless the user forces a refresh (r)
 
 const CACHE_PREFIX = "fifawc:cache:";
 const FAVOURITE_KEY = "fifawc:favourite";
